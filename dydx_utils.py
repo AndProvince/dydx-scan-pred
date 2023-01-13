@@ -46,6 +46,14 @@ def getCandles(client: Client, market: dydx3.constants, resolution: str, history
     return df
 
 def mainWork(model, client: Client, market: dydx3.constants, resolution: str):
+    '''
+    Main function to scan market via client and take prediction for next (resolution) period
+    :param model: model to take prediction
+    :param client: client to take data
+    :param market: market on client
+    :param resolution: time-based parameter in client
+    :return: None
+    '''
     needRetrain = False
     alreadyBuy = False
     account = 0

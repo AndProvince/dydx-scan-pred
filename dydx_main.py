@@ -42,4 +42,5 @@ else:
         csv.writer(file).writerows(dydx_config.DATAStd)
     print('Model prepared')
 
+#Main work: output in console
 mainWork(model, CLIENT, MARKET, RESOLUTION)

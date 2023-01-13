@@ -9,7 +9,6 @@ class ModelLSTM(nn.Module):
         self.inputDim = inputDim
         self.hiddenDim = hiddenDim
         self.lstm1 = nn.LSTM(input_size=self.inputDim, hidden_size=self.hiddenDim, num_layers=2, batch_first=True)
-        # self.lstm2 = nn.LSTM(input_size=32, hidden_size=24, num_layers=3, batch_first=True)
         self.fc1 = nn.Linear(in_features=self.hiddenDim * seqLen, out_features=128)
         self.fc2 = nn.Linear(in_features=128, out_features=32)
         self.fc3 = nn.Linear(in_features=32, out_features=outputDim)
@@ -19,9 +18,6 @@ class ModelLSTM(nn.Module):
 
         x = torch.tanh(self.lstm1(input)[0])
         x = x.reshape(x.shape[0], -1)
-
-        # x = torch.tanh(self.lstm2(x)[0])
-        # x = x.view(x.shape[0],-1)
 
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))

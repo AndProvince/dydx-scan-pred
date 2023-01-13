@@ -1,6 +1,6 @@
 HOST = 'https://api.dydx.exchange'
 MODEL_FILE = 'model/model_LSTM.pt'
-INPUTDIM = 6 #X.columns.shape[0]
+INPUTDIM = 6
 HIDDENDIM = 21
 SEQLEN = 50
 COUNTPRED = 1

@@ -110,6 +110,13 @@ def train(trainLoader, valLoader, model, criterion, optimizer, scheduler, epochs
         print('Epoch %d. \nTrain loss: %f \nVal loss: %f' % (epoch + 1, train_loss, val_loss))
 
 def prepareData(data, seqLen, countPred) -> (DataLoader, DataLoader):
+    '''
+    Take data in DataFrame format, return data in two DataLoaders: train and validate
+    :param data: input data in DataFrame
+    :param seqLen: length of data sequence to make predict
+    :param countPred: length of predict data
+    :return: test DataLoader, validate DataLoader
+    '''
     X = data[['low', 'high', 'open', 'close', 'baseTokenVolume', 'trades']]
     y = data['close']
     indTrain, indVal = train_test_split(range(y.shape[0] - seqLen - countPred),
@@ -140,10 +147,27 @@ def prepareData(data, seqLen, countPred) -> (DataLoader, DataLoader):
     return trainLoader, valLoader
 
 def initWeights(model):
+    '''
+    Function for initialize model parameters weigth
+    :param model: input model
+    :return: None
+    '''
     for name, param in model.named_parameters():
         nn.init.uniform_(param.data, -0.08, 0.08)
 
 def trainModel(data, inputDim, hidenDim, seqLen, outputDim, model=None, epochs=160, learningRate=0.001) -> ModelLSTM:
+    '''
+    Train or retrain model if it necessary
+    :param data: input data for train model
+    :param inputDim: input dimension for nn model
+    :param hidenDim: hiden dimension for nn model
+    :param seqLen: length of data sequence to make predict
+    :param outputDim: length of predict data
+    :param model: give model if necessary retrain, None if need new model
+    :param epochs: count epoch to train model
+    :param learningRate: starting learning rate to train model
+    :return: trained model
+    '''
     trainLoader, valLoader = prepareData(data, seqLen, outputDim)
 
     if not model:
